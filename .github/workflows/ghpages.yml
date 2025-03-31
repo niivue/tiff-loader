@@ -19,7 +19,7 @@ jobs:
       - name: Build demos and typedoc
         run: |
           npm ci
-          npm run build
+          npm run build:demo
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
