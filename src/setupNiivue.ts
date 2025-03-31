@@ -10,7 +10,7 @@ export async function setupNiivue(element: HTMLCanvasElement) {
   nv.useLoader(tiff2nii, 'lsm', 'nii')
   await nv.loadImages([
     {
-      url: '/shapes_deflate.tif'
+      url: './shapes_deflate.tif'
     }
   ])
 }
