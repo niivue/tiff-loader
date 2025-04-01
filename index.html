@@ -5,9 +5,29 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>tiff-loader</title>
-    <script type="module" crossorigin src="./assets/index-a-wGBZE-.js"></script>
+    <script type="module" crossorigin src="./assets/index-DIQHUkYQ.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-04j_XuJ0.css">
   </head>
   <body id="app">
+    <header>
+      <label for="dragSelect">Drag</label>
+      <select id="dragSelect">
+        <option>None</option>
+        <option>Contrast</option>
+        <option>Measurement</option>
+        <option selected>Pan</option>
+      </select>
+      <label for="smoothCheck">Smooth</label>
+      <input type="checkbox" checked="true" id="smoothCheck" />
+      <button id="prevBtn">Previous Slice</button>
+      <button id="nextBtn">Next Slice</button>
+      <button id="aboutBtn">About</button>
+    </header>
+    <main id="canvas-container">
+      <div style="display: flex; width: 100%; height: 100%">
+        <canvas id="nvCanvas"></canvas>
+      </div>
+    </main>
+    <footer id="statusText">&nbsp;</footer>
   </body>
 </html>
