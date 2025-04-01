@@ -40,7 +40,7 @@ Note this web page supports URL parameter-based file loading. This allows you to
 ```
 https://niivue.github.io/tiff-loader?image=https://niivue.github.io/niivue-demo-images/rgb_bmp.jpg
 https://niivue.github.io/tiff-loader?image=https://niivue.github.io/niivue-demo-images/gray_bmp.png
-https://niivue.github.io/tiff-loader?=https://niivue.github.io/niivue-demo-images/spm152.nii.gz
+https://niivue.github.io/tiff-loader?image=https://niivue.github.io/niivue-demo-images/spm152.nii.gz
 https://niivue.github.io/tiff-loader?image=https://niivue.github.io/niivue-demo-images/pcasl.nii.gz
 ```
 

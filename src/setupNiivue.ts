@@ -42,7 +42,6 @@ export async function setupNiivue(element: HTMLCanvasElement) {
      // Replace this with your actual image loading function
      imageUrl = imageUrlParsed
     }
-    nv.loadVolumes([{url: imageUrl}])
     var volumeList1 = [
       {
         url: imageUrl,
