@@ -6,7 +6,7 @@ export default defineConfig({
   base: './',
   publicDir: 'public',
   server: {
-    open: '/src/index.html'
+    open: 'index.html'
   },
   plugins: [],
   worker: {

@@ -24,22 +24,6 @@ export async function setupNiivue(element: HTMLCanvasElement) {
 
   const nv = new Niivue()
   nv.onLocationChange = onLocationChange
-  window.addEventListener('DOMContentLoaded', async () => {
-    const params = new URLSearchParams(window.location.search)
-    const imageUrlParsed = params.get('image')
-    let imageUrl = '/mni.tiff'
-    if (imageUrlParsed) {
-      console.log('Image URL detected:', imageUrlParsed)
-      imageUrl = imageUrlParsed
-    }
-    var volumeList1 = [
-      {
-        url: imageUrl,
-        limitFrames4D: 5
-      }
-    ]
-    await nv.loadVolumes(volumeList1)
-  })
   // supply loader function, fromExt, and toExt (without dots)
   nv.useLoader(tiff2nii, 'tif', 'nii')
   nv.useLoader(tiff2nii, 'tiff', 'nii')
@@ -47,6 +31,13 @@ export async function setupNiivue(element: HTMLCanvasElement) {
   nv.useLoader(tiff2nii, 'tf8', 'nii')
   nv.useLoader(tiff2nii, 'btf', 'nii')
   await nv.attachToCanvas(element)
+  var volumeList1 = [
+    {
+      url: './mni.tiff',
+      limitFrames4D: 5
+    }
+  ]
+  await nv.loadVolumes(volumeList1)
 
   nv.onImageLoaded = (volume) => {
     nv.setVolumeRenderIllumination(0)
@@ -82,7 +73,6 @@ export async function setupNiivue(element: HTMLCanvasElement) {
   aboutBtn.onclick = async function () {
     alert(`NiiVue visualization`)
   }
-  // dragSelect.onchange()
   nv.setSliceType(nv.sliceTypeMultiplanar)
   nv.graph.autoSizeMultiplanar = true
   nv.graph.normalizeValues = false
