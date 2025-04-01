@@ -1,10 +1,11 @@
 import { Niivue, SHOW_RENDER } from '@niivue/niivue'
 import { tiff2nii } from './lib/loader.js'
 //import { Niivue, NVImage, NVMesh, NVMeshLoaders, SHOW_RENDER, DRAG_MODE } from './niivue/index.ts'
-      
+
 export async function setupNiivue(element: HTMLCanvasElement) {
+  const dragSelect = document.getElementById('dragSelect') as HTMLSelectElement
   dragSelect.onchange = function () {
-    const drag = this.options[this.selectedIndex].text
+    const drag = dragSelect.options[dragSelect.selectedIndex].text
     if (drag === 'None') {
       nv.opts.dragMode = nv.dragModes.none
     } else if (drag === 'Contrast') {
@@ -15,40 +16,29 @@ export async function setupNiivue(element: HTMLCanvasElement) {
       nv.opts.dragMode = nv.dragModes.pan
     }
   }
-  smoothCheck.onchange = function () {
-    nv.setInterpolation(!this.checked)
-  }
-  prevBtn.onclick = async function () {
-     nv.moveCrosshairInVox(0, 0, -1)
-  }
-  nextBtn.onclick = async function () {
-     nv.moveCrosshairInVox(0, 0, 1)
-  }
-  aboutBtn.onclick = async function () {
-    alert(`NiiVue visualization`)
-  }
+
   const onLocationChange = (data) => {
-    statusText.innerHTML = '&nbsp;&nbsp;' + data.string + ` slice: ${data.vox[2]+1}/${nv.back.dims[3]}`
+    const statusText = document.getElementById('statusText') as HTMLDivElement
+    statusText.innerHTML = '&nbsp;&nbsp;' + data.string + ` slice: ${data.vox[2] + 1}/${nv.back.dims[3]}`
   }
 
-  const nv = new Niivue({onLocationChange: onLocationChange})
-  window.addEventListener('DOMContentLoaded', () => {
+  const nv = new Niivue()
+  nv.onLocationChange = onLocationChange
+  window.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search)
     const imageUrlParsed = params.get('image')
-    //let imageUrl = './pcasl.nii.gz'
-    let imageUrl = './mni.tiff'
+    let imageUrl = '/mni.tiff'
     if (imageUrlParsed) {
-     console.log('Image URL detected:', imageUrlParsed)
-     // Replace this with your actual image loading function
-     imageUrl = imageUrlParsed
+      console.log('Image URL detected:', imageUrlParsed)
+      imageUrl = imageUrlParsed
     }
     var volumeList1 = [
       {
         url: imageUrl,
         limitFrames4D: 5
-      },
+      }
     ]
-    nv.loadVolumes(volumeList1)
+    await nv.loadVolumes(volumeList1)
   })
   // supply loader function, fromExt, and toExt (without dots)
   nv.useLoader(tiff2nii, 'tif', 'nii')
@@ -60,22 +50,39 @@ export async function setupNiivue(element: HTMLCanvasElement) {
 
   nv.onImageLoaded = (volume) => {
     nv.setVolumeRenderIllumination(0)
-    if (nv.volumes[0].hdr.dims[3] > 1) {
+    if (nv.volumes[0].hdr!.dims[3] > 1) {
       prevBtn.style.display = 'inline-block'
       nextBtn.style.display = 'inline-block'
-      if (nv.opts.is2DSliceShader) {
-        nv.setSliceType(nv.sliceTypeAxial)
-        nv.setVolumeRenderIllumination(-1)
-      } else {
-        nv.setSliceType(nv.sliceTypeMultiplanar)
-      }
+      // This option is in the zarr branch right?
+      // if (nv.opts.is2DSliceShader) {
+      //   nv.setSliceType(nv.sliceTypeAxial)
+      //   nv.setVolumeRenderIllumination(-1)
+      // } else {
+      //   nv.setSliceType(nv.sliceTypeMultiplanar)
+      // }
     } else {
       prevBtn.style.display = 'none'
       nextBtn.style.display = 'none'
       nv.setSliceType(nv.sliceTypeAxial)
     }
   }
-  dragSelect.onchange()
+  const smoothCheck = document.getElementById('smoothCheck') as HTMLInputElement
+  smoothCheck.onchange = function () {
+    nv.setInterpolation(smoothCheck.checked)
+  }
+  const prevBtn = document.getElementById('prevBtn') as HTMLButtonElement
+  prevBtn.onclick = async function () {
+    nv.moveCrosshairInVox(0, 0, -1)
+  }
+  const nextBtn = document.getElementById('nextBtn') as HTMLButtonElement
+  nextBtn.onclick = async function () {
+    nv.moveCrosshairInVox(0, 0, 1)
+  }
+  const aboutBtn = document.getElementById('aboutBtn') as HTMLButtonElement
+  aboutBtn.onclick = async function () {
+    alert(`NiiVue visualization`)
+  }
+  // dragSelect.onchange()
   nv.setSliceType(nv.sliceTypeMultiplanar)
   nv.graph.autoSizeMultiplanar = true
   nv.graph.normalizeValues = false
