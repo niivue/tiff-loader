@@ -1,7 +1,9 @@
 import './niivue.css'
-import { setupNiivue } from './setupNiivue.js'
+import { setupNiivue, loadFromUrlParams } from './setupNiivue.js'
 async function main() {
-  // Note: moved the html to the index.html file
+  window.addEventListener('DOMContentLoaded', () => {
+    loadFromUrlParams()
+  })
   await setupNiivue(document.querySelector('#nvCanvas')!)
 }
 

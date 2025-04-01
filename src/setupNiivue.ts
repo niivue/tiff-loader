@@ -1,6 +1,24 @@
 import { Niivue, SHOW_RENDER } from '@niivue/niivue'
 import { tiff2nii } from './lib/loader.js'
-//import { Niivue, NVImage, NVMesh, NVMeshLoaders, SHOW_RENDER, DRAG_MODE } from './niivue/index.ts'
+
+const nv = new Niivue()
+
+export function loadFromUrlParams() {
+  const params = new URLSearchParams(window.location.search)
+  const imageUrlParsed = params.get('image')
+  let imageUrl = './mni.tiff'
+  if (imageUrlParsed) {
+    console.log('Image URL detected:', imageUrlParsed)
+    imageUrl = imageUrlParsed
+  }
+  var volumeList1 = [
+    {
+      url: imageUrl,
+      limitFrames4D: 5
+    }
+  ]
+  nv.loadVolumes(volumeList1)
+}
 
 export async function setupNiivue(element: HTMLCanvasElement) {
   const dragSelect = document.getElementById('dragSelect') as HTMLSelectElement
@@ -22,7 +40,6 @@ export async function setupNiivue(element: HTMLCanvasElement) {
     statusText.innerHTML = '&nbsp;&nbsp;' + data.string + ` slice: ${data.vox[2] + 1}/${nv.back.dims[3]}`
   }
 
-  const nv = new Niivue()
   nv.onLocationChange = onLocationChange
   // supply loader function, fromExt, and toExt (without dots)
   nv.useLoader(tiff2nii, 'tif', 'nii')
@@ -31,13 +48,6 @@ export async function setupNiivue(element: HTMLCanvasElement) {
   nv.useLoader(tiff2nii, 'tf8', 'nii')
   nv.useLoader(tiff2nii, 'btf', 'nii')
   await nv.attachToCanvas(element)
-  var volumeList1 = [
-    {
-      url: './mni.tiff',
-      limitFrames4D: 5
-    }
-  ]
-  await nv.loadVolumes(volumeList1)
 
   nv.onImageLoaded = (volume) => {
     nv.setVolumeRenderIllumination(0)
