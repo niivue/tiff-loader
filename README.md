@@ -33,6 +33,17 @@ await nv.loadImages([
 ])
 ```
 
+## Advanced Usage
+
+Note this web page supports URL parameter-based file loading. This allows you to open many neuroimaging formats by appending their name to the web address. Here are some examples:
+
+```
+https://niivue.github.io/tiff-loader?image=https://niivue.github.io/niivue-demo-images/rgb_bmp.jpg
+https://niivue.github.io/tiff-loader?image=https://niivue.github.io/niivue-demo-images/gray_bmp.png
+https://niivue.github.io/tiff-loader?=https://niivue.github.io/niivue-demo-images/spm152.nii.gz
+https://niivue.github.io/tiff-loader?image=https://niivue.github.io/niivue-demo-images/pcasl.nii.gz
+```
+
 ## Local Development
 
 To illustrate this library, `tiff2nii` is a node.js converter that can be run from the command line. The wrapper `batch_convert.js` allows you to convert all the tiff/tif/lsm files in a folder:
