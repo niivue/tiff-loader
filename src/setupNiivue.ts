@@ -46,6 +46,7 @@ export async function setupNiivue(element: HTMLCanvasElement) {
   nv.useLoader(tiff2nii, 'tiff', 'nii')
   nv.useLoader(tiff2nii, 'tf8', 'nii')
   nv.useLoader(tiff2nii, 'tf2', 'nii')
+  nv.useLoader(tiff2nii, 'svs', 'nii')
   nv.useLoader(tiff2nii, 'scn', 'nii')
   nv.useLoader(tiff2nii, 'lsm', 'nii')
   nv.useLoader(tiff2nii, 'btf', 'nii')
