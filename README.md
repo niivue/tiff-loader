@@ -74,9 +74,9 @@ npm run dev
 While TIFF is a popular 2D image format for bitmaps, it is also used by scientific instruments for multi-frame datasets with high precision (e.g. 16-bit scalars).
 
 - [ImageJ samples](https://samples.fiji.sc/) including ImageJ TIFF and LSM (Leica variation of TIFF).
-- [OME-TIFF sample data](https://ome-model.readthedocs.io/en/stable/ome-tiff/data.html).
+- [OME-TIFF sample data](https://ome-model.readthedocs.io/en/stable/ome-tiff/data.html) illustrating various extensions (tiff, tif, tf2, tf8, btf).
 - [Example TIFF images illustrating edge cases such as rare compression schemes](https://github.com/tlnagy/exampletiffs).
-
+ - [OpenSlide](https://openslide.org/) provides sample images for many TIFF variants (bif, scn).
 ## Alternative libraries
 
 For scientific applications, we need to preserve the precision of the source data (retaining 8, 16 or 32 bits per channel) and read 4D datasets (with 3D slices and different timepoints or contrasts). This limits the number of suitable libraries. This repository uses geotiff for speed and compatibility.

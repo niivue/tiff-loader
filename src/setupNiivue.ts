@@ -44,9 +44,12 @@ export async function setupNiivue(element: HTMLCanvasElement) {
   // supply loader function, fromExt, and toExt (without dots)
   nv.useLoader(tiff2nii, 'tif', 'nii')
   nv.useLoader(tiff2nii, 'tiff', 'nii')
-  nv.useLoader(tiff2nii, 'lsm', 'nii')
   nv.useLoader(tiff2nii, 'tf8', 'nii')
+  nv.useLoader(tiff2nii, 'tf2', 'nii')
+  nv.useLoader(tiff2nii, 'scn', 'nii')
+  nv.useLoader(tiff2nii, 'lsm', 'nii')
   nv.useLoader(tiff2nii, 'btf', 'nii')
+  nv.useLoader(tiff2nii, 'bif', 'nii')
   await nv.attachToCanvas(element)
 
   nv.onImageLoaded = (volume) => {

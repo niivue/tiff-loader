@@ -438,7 +438,13 @@ export async function tiff2niiStack(
         throw new Error('Fatal slice-order error')
       }
       const image = images[i]
-      const raster = await image.readRasters({ interleave: true })
+      let raster = []
+      if (hdr.datatypeCode === 128) {
+        // fromYCbCr
+        raster = await image.readRGB()
+      } else {
+        raster = await image.readRasters({ interleave: true })
+      }
       let pixelData = raster as number[] | Uint8Array
 
       // If 2-channel "RG", convert to 3-channel "RGB" by adding zero for B
